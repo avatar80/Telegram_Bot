@@ -5,21 +5,25 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://search.shopping.naver.com/search/all.nhn'
-params = {
-    'query': '닌텐도스위치',
-    'where': 'all',
-    'sort': 'review',
-}
-response = requests.get(url, params=params)
-html = response.text
-soup = BeautifulSoup(html, 'html.parser')
 
-item_list = soup.select('.info')
-for values in item_list:
-    title = values.find(class_='tit').text.strip()
-    price = values.find(class_='num').text.strip()
-    print(title, price)
+def search_price_with_review(product_name):
+    url = 'https://search.shopping.naver.com/search/all.nhn'
+    params = {
+        'query': product_name,
+        'where': 'all',
+        'sort': 'review',
+    }
+    response = requests.get(url, params=params)
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    item_list = soup.select('.info')
+    for values in item_list:
+        title = values.find(class_='tit').text.strip()
+        price = values.find(class_='num').text.strip()
+        print(title, price)
+
+
 
 
 
