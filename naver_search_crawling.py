@@ -6,7 +6,10 @@ import requests
 from bs4 import BeautifulSoup
 
 
+product_name = "닌텐도스위치"
+
 def search_price_with_review(product_name):
+    result={}
     url = 'https://search.shopping.naver.com/search/all.nhn'
     params = {
         'query': product_name,
@@ -21,9 +24,8 @@ def search_price_with_review(product_name):
     for values in item_list:
         title = values.find(class_='tit').text.strip()
         price = values.find(class_='num').text.strip()
-        print(title, price)
+        result[title] = price
+    return result
 
-
-
-
-
+# if __name__ == '__main__':
+    # search_price_with_review(product_name)

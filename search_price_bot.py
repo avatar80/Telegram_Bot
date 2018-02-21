@@ -5,6 +5,7 @@ from naver_search_crawling import search_price_with_review
 
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
+    strResult = []
 
     if content_type == 'text':
         chat_id = msg['chat']['id']
@@ -16,7 +17,10 @@ def on_chat_message(msg):
         elif text == "/start":
             pass
         else:
-            search_price_with_review(text)
+            price_info = search_price_with_review(text)
+            for key, value in price_info.items():
+                strResult.append(key + ':' + value + '\n')
+            bot.sendMessage(chat_id, ''.join(strResult))
 
 
 cfg = configparser.ConfigParser()
